@@ -4,11 +4,32 @@
 
 {% block content %} 
     <h2>Profile Page</h2>
-    <form method="post">
+    <form id="update_form" method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Update</button>
         <br><br>
         <a href="{% url 'home' %}">Back</a>
     </form>
+
+    
+<!--     <script type="text/javascript">
+    	$(document).on('submit', '#update_form', function(e){
+    		e.preventDefault();
+
+    		$.ajax({
+    			type:'POST',
+    			url:'/profile/<int:pk>/',
+    			data:{
+    				username:$('#username').val(),
+    				first_name:$('#first_name').val(),
+    				last_name:$('#last_name').val(),
+    				email:$('#email').val(),
+    			},
+    			success:function(){
+    				alert('success!')
+    			}
+    		});
+    	});
+    </script> -->
 {% endblock content %}

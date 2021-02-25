@@ -1,0 +1,13 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pytz = "==2019.1"
+sqlparse = "==0.3.0"
+Django = "==2.2.3"
+djangorestframework = "*"
+pillow = "*"
+
+[dev-packages]

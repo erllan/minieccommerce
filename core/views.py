@@ -10,8 +10,16 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.template.loader import render_to_string
 from core.tokens import account_activation_token
+from core.models import Category, Product
 
-# Sign Up View
+
+def index(request):
+    categories = Category.objects.all()
+    products = Product.objects.all()
+    return render(request, 'home.html', {'categories': categories,
+                                        'products': products})
+
+
 class SignUpView(View):
     form_class = SignUpForm
     template_name = 'commons/signup.html'
@@ -72,9 +80,11 @@ class ActivateAccount(View):
             return redirect('home')
 
 
-# Edit Profile View
 class ProfileView(UpdateView):
     model = User
     form_class = ProfileForm
     success_url = reverse_lazy('home')
     template_name = 'commons/profile.html'
+
+
+

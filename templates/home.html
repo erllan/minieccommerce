@@ -3,22 +3,51 @@
 {% block title %}Home Page{% endblock title %}
 
 {% block content %} 
-    <h2>Home</h2>
-    {% if user.is_authenticated %}
-    <p>You are welcome on Home Page</p>
-    <p>Your name is - {{user.first_name}} {{user.last_name}}</p>
-    <p>Your email is - {{user.email}}</p>
-    <br>
-    <a href="{% url 'profile' user.id %}">Edit Profile</a>
-    <br><br>
-    <a href="{% url 'change_password' %}">Change Password</a>
-    <br><br>
-    <a href="{% url 'logout' %}">Logout</a>
-    {% else %}
-    <a href="{% url 'login' %}">Login</a>
-    <br><br>
-    <a href="{% url 'password_reset' %}">Forgot Password</a>
-    <br><br>
-    <a href="{% url 'signup' %}">Sign Up</a>
-    {% endif %}
+<div class="container">
+	<div class="row">
+		<div class="col-lg-3">
+			<ul class="list-group">
+				<p><b>CATEGORIES</b></p>
+				{% for category in categories %}
+				<li class="list-group-item"><b>{{ category }}</b></li>
+				{% endfor %}
+			</ul>
+		</div>
+
+			<div class="col-lg-11">
+
+			{% for prod in products %}
+			<div class="card h-10">
+				<img src="{{ prod.image.url }}" class="card-img-top" alt="...">
+				<div class="card-body">
+					<h5 class="card-title">{{prod.title}}</h5>
+					<p class="card-text">{{prod.category}}</p>
+					<span>{{prod.price}}$</span>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+
+</div>
+
+	<style type="text/css">
+		.card {
+			width: 18rem; 
+			margin-left: 2em; 
+			margin-top: 2em; 
+			border-color: purple; 
+			float:left;
+		}
+		.list-group {
+			margin-top: 1em;
+		}
+		.list-group li{
+			color: #66ccff;
+			border-color: blue;
+		}
+
+	</style>
+
+
 {% endblock content %}
