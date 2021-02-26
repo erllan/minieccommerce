@@ -29,7 +29,7 @@ def signup(request):
 				user = serializer.save(is_active=False)
 				#user.is_active = False # Deactivate account till it is confirmed
 				current_site = get_current_site(request)
-				subject = 'Activate Your MySite Account'
+				subject = 'Activate Your Account'
 				message = render_to_string('emails/account_activation_email.html', {
 				'user': user,
 				'domain': current_site.domain,
@@ -42,7 +42,7 @@ def signup(request):
 	return Response(serializer.initial_data)
 
 
-@api_view(['POST'])
+@api_view(['GET','POST'])
 def update(request, pk):
 	user = User.objects.get(id=pk)
 	if request.method == 'POST':
@@ -50,3 +50,7 @@ def update(request, pk):
 		if serializer.is_valid():
 			serializer.save()
 			return Response(serializer.data)
+	else:
+		serializer = UpdateUserSerializer(instance=user)
+		return Response(serializer.data)
+	

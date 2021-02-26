@@ -88,3 +88,6 @@ class ProfileView(UpdateView):
 
 
 
+def edit(request, pk):
+    user = User.objects.get(id=pk)
+    return render(request, 'commons/edit.html', {'user':user})

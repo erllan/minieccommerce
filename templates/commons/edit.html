@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}Profile Page{% endblock title %}
+
+
+{% block content %} 
+<form id="profile_form" style="margin-left: 3em;">
+<!--   <label for="uname">Username:</label><br>
+  <input type="text" id="uname" name="fname" value="John"><br>
+  <label for="fname">First name:</label><br>
+  <input type="text" id="fname" name="fname" value="John"><br>
+  <label for="lname">Last name:</label><br>
+  <input type="text" id="lname" name="lname" value="Doe"><br>
+  <label for="email">Email:</label><br>
+  <input type="text" id="email" name="fname" value="John"><br>
+   <input type="submit" value="Submit" style="margin-top: 1em;"> -->
+</form>
+
+    
+    <script type="text/javascript">
+
+                function getCookie(name) {
+                    let cookieValue = null;
+                    if (document.cookie && document.cookie !== '') {
+                        const cookies = document.cookie.split(';');
+                        for (let i = 0; i < cookies.length; i++) {
+                            const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+                return cookieValue;
+    }
+            const csrftoken = getCookie('csrftoken');
+
+
+
+        editprofile()
+        function editprofile(){
+            var update_profile = document.getElementById('profile_form')
+            update_profile.innerHTML = ''
+            var url = 'http://127.0.0.1:8000/api/update/3/' 
+
+            fetch(url)
+            .then((resp) => resp.json())
+            .then(function(data){
+                console.log('Data:', data)
+
+                var prof = data
+
+                    var item = `
+                        <h2>Profile Page</h2>
+                        <label for="uname">Username:</label><br>
+                        <input id="uname" type="text" id="uname" name="fname" value="${prof.username}"><br>
+                        <label for="fname">First name:</label><br>
+                         <input type="text" id="fname" name="fname" value="${prof.first_name}"><br>
+                         <label for="lname">Last name:</label><br>
+                         <input type="text" id="lname" name="lname" value="${prof.last_name}"><br>
+                         <label for="email">Email:</label><br>
+                         <input type="text" id="email" name="fname" value="${prof.email}"><br>
+                         <input type="submit" value="Update" style="margin-top: 1em;">
+                         `
+                
+                update_profile.innerHTML += item
+            })
+        }
+
+
+        var form = document.getElementById('profile_form')
+        form.addEventListener('submit', function(e){
+            e.preventDefault()
+            console.log('Form submitted')
+
+            var url = 'http://127.0.0.1:8000/api/update/3/'
+
+            var username = document.getElementById('uname').value
+            var first_name = document.getElementById('fname').value
+            var last_name = document.getElementById('lname').value
+            var email = document.getElementById('email').value
+
+            fetch(url, {
+                method:'POST',
+                headers:{
+                    'Content-type':'application/json',
+                    'X-CSRFToken': csrftoken,
+                },
+                body:JSON.stringify({'username': username,
+                                     'first_name': first_name,
+                                     'last_name': last_name,
+                                     'email': email
+                                  })
+            }).then(function(response){
+                editprofile()
+        })
+    })
+
+
+    </script>
+
+<!--     <script type="text/javascript">
+    	$(document).on('submit', '#update_form', function(e){
+    		e.preventDefault();
+
+    		$.ajax({
+    			type:'POST',
+    			url:'/profile/<int:pk>/',
+    			data:{
+    				username:$('#username').val(),
+    				first_name:$('#first_name').val(),
+    				last_name:$('#last_name').val(),
+    				email:$('#email').val(),
+    			},
+    			success:function(){
+    				alert('success!')
+    			}
+    		});
+    	});
+    </script> -->
+{% endblock content %}

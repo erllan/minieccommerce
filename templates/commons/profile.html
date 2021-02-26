@@ -3,8 +3,9 @@
 {% block title %}Profile Page{% endblock title %}
 
 {% block content %} 
-    <h2>Profile Page</h2>
-    <form id="update_form" method="post">
+    
+    <form id="update_form" method="post" style="margin-left: 3em;">
+        <h2>Profile Page</h2>
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit">Update</button>

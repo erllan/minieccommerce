@@ -10,6 +10,6 @@ urlpatterns = [
     path('users/', userlist, name='users'),
     path('signup/', signup, name='signup'),
     path('token-auth/', CustomAuthToken.as_view()),
-    path('update/<str:pk>/', update, name='profile_update'),
+    path('update/<int:pk>/', update)
     
 ]
