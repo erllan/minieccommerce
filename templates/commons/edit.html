@@ -4,6 +4,8 @@
 
 
 {% block content %} 
+<h3 style="margin-left: 3em;">User id</h3>
+<input type="" name="" id="user_id" value="{{ user.id }}" style="margin-left: 3em;">
 <form id="profile_form" style="margin-left: 3em;">
 <!--   <label for="uname">Username:</label><br>
   <input type="text" id="uname" name="fname" value="John"><br>
@@ -42,7 +44,8 @@
         function editprofile(){
             var update_profile = document.getElementById('profile_form')
             update_profile.innerHTML = ''
-            var url = 'http://127.0.0.1:8000/api/update/3/' 
+            var user_id = document.getElementById('user_id').value
+            var url = `http://127.0.0.1:8000/api/update/${user_id}/`
 
             fetch(url)
             .then((resp) => resp.json())
@@ -72,9 +75,8 @@
         var form = document.getElementById('profile_form')
         form.addEventListener('submit', function(e){
             e.preventDefault()
-            console.log('Form submitted')
-
-            var url = 'http://127.0.0.1:8000/api/update/3/'
+            var user_id = document.getElementById('user_id').value
+            var url = `http://127.0.0.1:8000/api/update/${user_id}/`
 
             var username = document.getElementById('uname').value
             var first_name = document.getElementById('fname').value
